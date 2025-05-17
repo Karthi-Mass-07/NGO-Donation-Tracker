@@ -35,22 +35,32 @@ const App = () => {
     };
     syncCookies();
 
-    const interval = setInterval(syncCookies, 5000); 
+    const interval = setInterval(syncCookies, 5000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <BrowserRouter>
-      {isAdmin ? <AdminNavbar /> : isLoggedIn && <Header />}
+      {isAdmin ? <AdminNavbar /> : <Header />}
 
       <Routes>
-        <Route path="/" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
-        <Route path="/register" element={!isLoggedIn ? <Register /> : <Navigate to="/" />} />
-        <Route path="/login" element={!isLoggedIn ? <Login /> : <Navigate to="/" />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/donate" element={isLoggedIn ? <Donation /> : <Navigate to="/login" />} />
-        <Route path="/volunteers" element={isLoggedIn ? <Volunteer /> : <Navigate to="/login" />} />
+       
+          {/* Public Pages */}
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+
+          {/* Auth Pages */}
+          <Route path="/login" element={!isLoggedIn ? <Login /> : <Navigate to="/" />} />
+          <Route path="/register" element={!isLoggedIn ? <Register /> : <Navigate to="/" />} />
+
+          {/* Protected Pages */}
+          <Route path="/donate" element={isLoggedIn ? <Donation /> : <Navigate to="/login" />} />
+          <Route path="/volunteers" element={isLoggedIn ? <Volunteer /> : <Navigate to="/login" />} />
+
+          {/* Fallback for unmatched routes */}
+          <Route path="*" element={<Navigate to="/" />} />
+    
 
         {/* Admin-only Routes */}
         <Route path="/dashboard" element={isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} />
@@ -58,10 +68,10 @@ const App = () => {
         <Route path="/admin/donations" element={isAdmin ? <DonationList /> : <Navigate to="/login" />} />
         <Route path="/admin/volunteers" element={isAdmin ? <VolunteerList /> : <Navigate to="/login" />} />
         <Route path="/admin/add/distribution" element={isAdmin ? <AddDistribution /> : <Navigate to="/login" />} />
-        <Route path="/admin/get/distribution" element={isAdmin ? <DistributionList/> : <Navigate to="/login" />} />
+        <Route path="/admin/get/distribution" element={isAdmin ? <DistributionList /> : <Navigate to="/login" />} />
       </Routes>
 
-      {isLoggedIn && <Footer />}
+     <Footer />
     </BrowserRouter>
   );
 };

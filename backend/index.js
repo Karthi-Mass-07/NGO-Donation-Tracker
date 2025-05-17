@@ -10,6 +10,7 @@ const authRoutes = require('./routes/authRoutes');
 const distributionRoutes = require('./routes/distributionRoutes');
 const donationRoutes = require('./routes/donationRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes')
+const contactRoutes = require('./routes/contactRoutes');
 
 
 dotenv.config ({path: path.resolve(__dirname, "config", ".env")});
@@ -24,7 +25,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/distribution', distributionRoutes);
 app.use('/api/donation', donationRoutes);
-app.use('/api/volunteer', volunteerRoutes)
+app.use('/api/volunteer', volunteerRoutes);
+app.use('/api', contactRoutes);
 
 
 
